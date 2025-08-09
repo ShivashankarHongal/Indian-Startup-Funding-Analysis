@@ -35,3 +35,6 @@ Which industry verticals have the most startups.
 Which cities receive the most funding.
 Which startups have received the most funding rounds.
 The prevalence of different investment types.
+
+
+https://colab.research.google.com/drive/18dfHOfJsN5m8Em8qhuUc6cWXoxXp45mL#scrollTo=yX4C_UdEbA03
