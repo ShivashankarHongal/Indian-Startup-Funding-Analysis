@@ -1,40 +1,119 @@
-# Indian-Startup-Funding-Analysis
------------>
-This notebook analyzes startup funding data to identify trends, top sectors, top startups, and investment type distribution.
+# Indian-Startup-Funding-Analysis.
 
-Data Source
-The data used in this analysis is from the "startup_funding.csv" file.
+A simple data-cleaning, analysis, and visualization script for a startup funding dataset. The main processing and plotting code is in mainn.py.&#x20;
 
-Analysis Steps
-Data Loading and Initial Inspection: The notebook loads the data into a pandas DataFrame and displays the head and information about the DataFrame to understand its structure and content.
+## Table of contents
 
-Data Cleaning and Preparation:
+* [About](#about)
+* [Features](#features)
+* [Files](#files)
+* [Requirements](#requirements)
+* [Usage](#usage)
+* [Dataset](#dataset)
+* [What the script does (summary)](#what-the-script-does-summary)
+* [Notes & troubleshooting](#notes--troubleshooting)
+* [License & contact](#license--contact)
 
-The 'Date dd/mm/yyyy' column is converted to datetime objects.
-The 'Amount in USD' column is cleaned by removing commas and converting it to numeric type.
-Funding Trend Analysis: The total funding amount is calculated and displayed over time, aggregated by month.
+---
 
-Top Sectors Analysis: The top 5 industry verticals based on the number of startups are identified and displayed.
+## About
 
-Top Startups Analysis: The top 5 startups based on the number of funding rounds are identified and displayed.
+This project reads a CSV of startup funding rounds, cleans and standardizes key columns, computes summary statistics (yearly/monthly totals, top sectors, cities, startups, and investors), and produces several visualizations (line plots and bar charts).
 
-Investment Type Distribution: The distribution of different investment types is calculated and displayed.
+## Features
 
-Visualization: The notebook generates several plots to visualize the findings:
+* Cleans common messy columns (dates, numeric amounts with commas/plus signs, non-ASCII characters).
+* Fills missing values for important categorical fields.
+* Extracts funding year and month.
+* Aggregates funding by year, month, industry vertical, city, startup, investor, and investment type.
+* Produces multiple matplotlib/seaborn visualizations.
 
-Startup Funding Trend Over Time (Line plot)
-Top 5 Industry Verticals by Count (Bar plot)
-Top 5 Cities by Funding Amount (Bar plot)
-Top 5 Startups by Funding Amount (Bar plot)
-Distribution of Investment Types (Bar plot)
-Visualizations
-The visualizations provide insights into:
+## Files
 
-How startup funding has changed over time.
-Which industry verticals have the most startups.
-Which cities receive the most funding.
-Which startups have received the most funding rounds.
-The prevalence of different investment types.
+* mainn.py — main script performing data cleaning, aggregation and plotting.&#x20;
+* startup_funding.csv — *(required)* dataset file (not included in repo).
+
+## Requirements
+
+Recommended Python environment:
+
+* Python 3.8+
+* pandas
+* matplotlib
+* seaborn
+
+Install dependencies (example):
+
+bash
+python -m venv venv
+source venv/bin/activate    # Linux / macOS
+venv\Scripts\activate       # Windows PowerShell
+pip install pandas matplotlib seaborn
 
 
-https://colab.research.google.com/drive/18dfHOfJsN5m8Em8qhuUc6cWXoxXp45mL#scrollTo=yX4C_UdEbA03
+You may create a requirements.txt with:
+
+
+pandas
+matplotlib
+seaborn
+
+
+## Usage
+
+1. Place your dataset file next to the script, named startup_funding.csv — or change the path in mainn.py.
+2. Run the script. Note: mainn.py uses display() and df.info() which are notebook-friendly. For running as a plain script, run it in a Jupyter notebook or replace display() calls with print() or saving outputs to files.
+
+Jupyter:
+
+bash
+jupyter notebook
+# open a notebook and run the cells, or
+jupyter lab
+
+
+As a script (quick hack):
+
+bash
+python mainn.py
+
+
+(If running as a script, you may need to remove/replace display() calls to avoid errors.)
+
+## Dataset (expected columns)
+
+The script assumes the CSV contains (at minimum) columns with these names:
+
+* Sr No — unique or sequential id per row (used for counts)
+* Startup Name
+* Industry Vertical
+* SubVertical
+* City  Location
+* Investors Name
+* InvestmentnType  (note spelling; the script expects this exact name)
+* Amount in USD — numeric amounts, possibly with commas / plus signs
+* Date dd/mm/yyyy — date in dd/mm/yyyy format
+* Remarks — optional; script drops it if present
+
+If your file uses slightly different column names, either rename them in the CSV or update mainn.py accordingly.
+
+## What the script does (summary)
+
+1. Loads the CSV into a pandas DataFrame.
+2. Drops Remarks if present.
+3. Fills missing values in categorical columns with 'Unknown'.
+4. Cleans Amount in USD (removes commas and plus signs) and converts to numeric (NaNs → 0).
+5. Parses Date dd/mm/yyyy into datetime objects.
+6. Normalizes text fields: strips, removes non-ASCII chars, squashes whitespace, converts to lowercase.
+7. Adds FundingYear and FundingMonth columns.
+8. Aggregates and displays:
+
+   * Yearly funding totals and number of deals
+   * Monthly funding totals and number of deals
+   * Top sectors, cities, startups by funding
+   * Top investors by funding and by number of deals
+   * Investment types summary
+     
+9. Produces seaborn/matplotlib plots for trends and top lists.
+
+Link :  https://colab.research.google.com/drive/18dfHOfJsN5m8Em8qhuUc6cWXoxXp45mL
